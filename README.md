@@ -10,10 +10,12 @@ The Nexus cluster runs an older glibc (2.28), which makes installing these packa
 
 ## Wheels
 
-| Package | Wheel file |
-|---------|-----------|
-| flash-attn 2.8.3 | `flash_attn-2.8.3+cu12torch2.8cxx11abiTRUE-cp310-cp310-linux_x86_64.whl` |
-| vllm 0.15.1 | `vllm-0.15.1+cu128-cp310-cp310-linux_x86_64.whl` |
+Download from the [v1.0 release](https://github.com/minghui-liu/nexus_wheels/releases/tag/v1.0):
+
+| Package | Download |
+|---------|----------|
+| flash-attn 2.8.3 | [flash_attn-2.8.3+cu128torch2.9-cp310-cp310-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl](https://github.com/minghui-liu/nexus_wheels/releases/download/v1.0/flash_attn-2.8.3+cu128torch2.9-cp310-cp310-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl) |
+| vllm 0.15.1 | [vllm-0.15.1.cu128-cp310-cp310-linux_x86_64.whl](https://github.com/minghui-liu/nexus_wheels/releases/download/v1.0/vllm-0.15.1.cu128-cp310-cp310-linux_x86_64.whl) |
 
 ## Prerequisites
 
@@ -27,6 +29,13 @@ module load cuda/12.8.1
 
 ## Installation Instructions
 
+Define the wheel URLs once, then use them in any of the options below:
+
+```bash
+FLASH_ATTN_WHL="https://github.com/minghui-liu/nexus_wheels/releases/download/v1.0/flash_attn-2.8.3+cu128torch2.9-cp310-cp310-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl"
+VLLM_WHL="https://github.com/minghui-liu/nexus_wheels/releases/download/v1.0/vllm-0.15.1.cu128-cp310-cp310-linux_x86_64.whl"
+```
+
 ### Option 1: conda
 
 ```bash
@@ -37,9 +46,9 @@ conda activate myenv
 # Install PyTorch 2.9.1 with CUDA 12.8 support
 pip install torch==2.9.1 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
 
-# Install flash-attn and vllm from the local wheels
-pip install flash_attn-2.8.3+cu12torch2.8cxx11abiTRUE-cp310-cp310-linux_x86_64.whl
-pip install vllm-0.15.1+cu128-cp310-cp310-linux_x86_64.whl
+# Install flash-attn and vllm directly from the release
+pip install "$FLASH_ATTN_WHL"
+pip install "$VLLM_WHL"
 ```
 
 ---
@@ -54,9 +63,9 @@ source myenv/bin/activate
 # Install PyTorch 2.9.1 with CUDA 12.8 support
 pip install torch==2.9.1 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
 
-# Install flash-attn and vllm from the local wheels
-pip install flash_attn-2.8.3+cu12torch2.8cxx11abiTRUE-cp310-cp310-linux_x86_64.whl
-pip install vllm-0.15.1+cu128-cp310-cp310-linux_x86_64.whl
+# Install flash-attn and vllm directly from the release
+pip install "$FLASH_ATTN_WHL"
+pip install "$VLLM_WHL"
 ```
 
 ---
@@ -71,9 +80,9 @@ source myenv/bin/activate
 # Install PyTorch 2.9.1 with CUDA 12.8 support
 uv pip install torch==2.9.1 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
 
-# Install flash-attn and vllm from the local wheels
-uv pip install flash_attn-2.8.3+cu12torch2.8cxx11abiTRUE-cp310-cp310-linux_x86_64.whl
-uv pip install vllm-0.15.1+cu128-cp310-cp310-linux_x86_64.whl
+# Install flash-attn and vllm directly from the release
+uv pip install "$FLASH_ATTN_WHL"
+uv pip install "$VLLM_WHL"
 ```
 
 ---
@@ -82,4 +91,4 @@ uv pip install vllm-0.15.1+cu128-cp310-cp310-linux_x86_64.whl
 
 - These wheels are only compatible with **Python 3.10**. Make sure your environment uses Python 3.10.
 - Always run `module load cuda/12.8.1` before activating your environment or running any GPU workloads.
-- The wheels are built with `cxx11abi=TRUE`. If you see ABI-related errors, ensure your PyTorch installation also uses the CXX11 ABI (the default for PyPI/`whl/cu128` builds).
+- The wheels are compatible with PyTorch 2.9 and CUDA 12.8.
