@@ -5,7 +5,7 @@ Pre-compiled Python wheels for [flash-attn](https://github.com/Dao-AILab/flash-a
 The Nexus cluster runs an older glibc (2.28), which makes installing these packages from PyPI difficult or impossible. These wheels are compiled against:
 
 - **CUDA 12.8.1**
-- **PyTorch >= 2.8** (2.9.1 recommended)
+- **PyTorch 2.9.1**
 - **Python 3.10**
 
 ## Wheels
